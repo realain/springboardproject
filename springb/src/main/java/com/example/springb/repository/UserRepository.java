@@ -5,17 +5,13 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository {
 
-    List<User> getList();
-
-    User get(BigInteger userNum);
-
-    void save(User user);
-
-    void update(User user);
-
-    void delete(BigInteger userNum);
+    User save(User user);
+    Optional<User> findById(BigInteger userNum);
+    Optional<User> findByName(String userName);
+    List<User> findAll();
 }
