@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="springb.springb.main" target="17" />
-      <module name="springb.springb.test" target="17" />
+      <module name="springb.springb.main~1" target="17" />
+      <module name="springb.springb.test~1" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

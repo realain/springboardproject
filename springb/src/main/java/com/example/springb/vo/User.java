@@ -1,4 +1,4 @@
-package com.example.springb.domain;
+package com.example.springb.vo;
 
 
 import lombok.Data;

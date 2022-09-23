@@ -1,6 +1,6 @@
 package com.example.springb.repository;
 
-import com.example.springb.domain.User;
+import com.example.springb.vo.User;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
