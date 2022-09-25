@@ -1,12 +1,14 @@
-package com.example.springb.vo;
+package com.example.springb.domain;
 
 
 import lombok.Data;
+
 import java.math.BigInteger;
 import java.sql.Date;
 
+
 @Data
-public class User {
+public class UserVo {
 
     private BigInteger userNum;
     private String userId;

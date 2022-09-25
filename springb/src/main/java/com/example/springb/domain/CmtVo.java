@@ -1,4 +1,4 @@
-package com.example.springb.vo;
+package com.example.springb.domain;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 
 @Data
-public class Cmt {
+public class CmtVo {
     private int cmtNum;
     private BigInteger userNum;
     private String cmtContent;
