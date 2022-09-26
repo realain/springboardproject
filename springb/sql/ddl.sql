@@ -92,7 +92,6 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-
 use springboard;
 show tables;
 desc user;
@@ -101,11 +100,11 @@ desc board;
 ALTER TABLE user AUTO_INCREMENT=1;
 delete from user;
 INSERT INTO `springboard`.`user`
-(`userId`,
- `userPw`,
- `userName`,
- `userPhone`,
- `userGrade`)
+(`id`,
+ `pw`,
+ `name`,
+ `phone`,
+ `grade`)
 VALUES
     (
         'admin',
@@ -116,9 +115,9 @@ VALUES
 select * from user;
 
 INSERT INTO `springboard`.`board`
-(`userNum`,
- `boardTitle`,
- `boardContent`)
+(`userIdx`,
+ `title`,
+ `content`)
 VALUES
     ('1','제목 작성 완료', '내용 작성 완료'),
     ('1','제목 작성 완료1','내용 작성 완료1');
@@ -126,7 +125,7 @@ VALUES
 select * from board;
 
 INSERT INTO `springboard`.`cmt`
-(`userNum`,`cmtContent`,`boardNum`,`cmtParent`,`cmtFloor`,`cmtOrder`,`cmtGroup`)
+(`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`order`,`group`)
 VALUES
     ('1','내용1','1',null,'0','0','0'),
     ('1','내용2','1',null,'0','5','1'),
@@ -137,3 +136,4 @@ VALUES
     ('1','내용7','1',null,'0','6','2');
 
 select * from cmt order by cmtorder;
+

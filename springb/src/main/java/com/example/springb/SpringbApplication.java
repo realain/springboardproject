@@ -1,5 +1,6 @@
 package com.example.springb;
 
+import com.example.springb.domain.UserVo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -10,10 +10,36 @@
 </h1>
 
 <h1>
-  [[${uNum}]]
+  [[${uIdx}]]
 </h1>
 <h1>
   [[${uList}]]
 </h1>
+<div id="boardList">
+  <h2>유저 목록</h2>
+    <table border="1">
+      <tr>
+        <th>유저 num</th>
+        <th>유저 id</th>
+        <th>유저 pw</th>
+        <th>유저 name</th>
+        <th>유저 phone</th>
+        <th>유저 grade</th>
+        <th>유저 insertdate</th>
+      </tr>
+      <tr th:if="${uIdx==0}">
+        <p>유저가 존재하지 않습니다</p>
+      </tr>
+      <tr th:each="user:${uList}">
+        <td th:text="${user.userIdx}"></td>
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.pw}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.phone}"></td>
+        <td th:text="${user.grade}"></td>
+        <td th:text="${user.insertdate}"></td>
+      </tr>
+    </table>
+</div>
 </body>
 </html>
