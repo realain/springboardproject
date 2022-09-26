@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang ="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+</head>
+<body>
+    <h1>게시글 목록</h1>
+    <table border="1">
+        <tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>작성일</th>
+        </tr>
+        <div th:if="${bIdx==0}">
+            <p>게시글이 없습니다.</p>
+        </div>
+        <tr th:each="boardList:${bList}">
+            <td th:text="${boardList.boardIdx}"></td>
+            <td th:text="${boardList.userIdx}"></td>
+            <td th:onclick="|location.href='@{/board/detail(bIdx = ${boardList.getBoardIdx()})}'|" >[[${boardList.title}]]</td>
+            <td th:text="${boardList.insertdate}"></td>
+        </tr>
+    </table>
+</body>
+</html>

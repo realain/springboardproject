@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>제목</h1>
+    <h2 th:text="${bIdx.title}"></h2>
+    <ul>
+        <li>
+            번호 :
+            <p th:text="${bIdx.boardIdx}"></p>
+        </li>
+        <li>
+            작성자 :
+            <p th:text="${uName.name}"></p>
+        </li>
+        <li>
+            내용 :
+            <p th:text="${bIdx.content}"></p>
+        </li>
+        <li>
+            등록일 :
+            <p th:text="${bIdx.insertdate}"></p>
+        </li>
+    </ul>
+    <a th:href='@{/board/modify(bIdx = ${bIdx.boardIdx})}'>수정</a>
+    <a th:href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'>삭제</a>
+
+</body>
+</html>

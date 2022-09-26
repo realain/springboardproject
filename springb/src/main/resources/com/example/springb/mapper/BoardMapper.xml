@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springb.mapper.BoardMapper">
-    <select id="userNum" resultType="int">
+    <select id="boardNum" resultType="int">
         select count(boardIdx) as bIdx from board;
     </select>
     <select id="findAll" resultType="com.example.springb.domain.BoardVo">
         SELECT * FROM board;
     </select>
+    <select id="findById" parameterType="Integer" resultType="com.example.springb.domain.BoardVo">
+        SELECT * FROM board where boardIdx = #{boardIdx};
+    </select>
+    <select id="findUserName" parameterType="Integer" resultType="com.example.springb.domain.UserVo">
+        select user.name from user inner join board on user.userIdx= board.userIdx where boardIdx=#{boardIdx};
+    </select>
+    <delete id="boardDelete" parameterType="Integer">
+        delete from board where boardIdx=#{boardIdx};
+    </delete>
 </mapper>
