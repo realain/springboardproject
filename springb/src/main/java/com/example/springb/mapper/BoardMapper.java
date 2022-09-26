@@ -3,7 +3,6 @@ package com.example.springb.mapper;
 import com.example.springb.domain.BoardVo;
 import com.example.springb.domain.UserVo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,9 +13,11 @@ public interface BoardMapper {
 
     List<BoardVo> findAll();
 
-    BoardVo findById(int boardIdx);
+    BoardVo findById(int boardIdx)throws Exception;
 
-    UserVo findUserName(int boardIdx);
+    UserVo findUserName(int boardIdx)throws Exception;
 
-    public int boardDelete(int boardIdx);
+    int boardDelete(int boardIdx)throws Exception;
+
+    void boardModify(BoardVo boardVo)throws Exception;
 }
