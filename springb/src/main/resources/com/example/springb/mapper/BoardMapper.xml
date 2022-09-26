@@ -16,7 +16,7 @@
     <delete id="boardDelete" parameterType="Integer">
         delete from board where boardIdx=#{boardIdx};
     </delete>
-    <update id="boardModify" parameterType="String">
+    <update id="boardModify" parameterType="com.example.springb.domain.BoardVo">
         update board set title = #{title}, content = #{content} where boardIdx= #{boardIdx};
     </update>
 </mapper>
