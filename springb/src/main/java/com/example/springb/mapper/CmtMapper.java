@@ -15,7 +15,7 @@ public interface CmtMapper {
 
     List<CmtVo> findById(int cmtIdx)throws Exception;
 
-    UserVo findUserName(int cmtIdx)throws Exception;
+    int findBoardIdx(int cmtIdx)throws Exception;
 
     int cmtDelete(int cmdIdx)throws Exception;
 

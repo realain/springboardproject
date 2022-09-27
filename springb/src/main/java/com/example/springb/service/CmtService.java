@@ -27,8 +27,8 @@ public class CmtService {
     public List<CmtVo> findById(int cmtIdx)throws Exception{
         return cmtMapper.findById(cmtIdx);
     }
-    public UserVo findUserName(int cmtIdx)throws Exception{
-        return cmtMapper.findUserName(cmtIdx);
+    public int findBoardIdx(int cmtIdx)throws Exception{
+        return cmtMapper.findBoardIdx(cmtIdx);
     }
     public int cmtDelete(int cmdIdx)throws Exception{
         return cmtMapper.cmtDelete(cmdIdx);

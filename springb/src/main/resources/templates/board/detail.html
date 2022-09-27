@@ -3,6 +3,7 @@
 <html lang ="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Title</title>
 </head>
 <body>
@@ -34,27 +35,28 @@
     <div th:if="${cmtList ==null}">
         <p>댓글이 없음</p>
     </div>
-    <table id="cmtList">
-        <tr>
-            <th>댓글 작성자</th>
-            <th>내용</th>
-            <th>작성일</th>
-            <th>수정</th>
-            <th>답글등록</th>
-            <th>삭제버튼</th>
-        </tr>
-        <tr th:each="cmt:${cmtList}">
-            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.userIdx}]]</td>
-            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.content}]]</td>
-            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.insertdate}]]</td>
-            <td th:onclick="|location.href='@{/cmt/modify(cIdx = ${cmt.getCmtIdx()})}'|">수정</td>
-            <td th:onclick="|location.href='@{/cmt/insert(cIdx = ${cmt.getParent()})}'|">답글</td>
-            <td th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getParent()})}'|">삭제</td>
-        </tr>
-
-    </table>
     <a th:href='@{/board/modifyForm(bIdx = ${bIdx.boardIdx})}'>게시글 수정</a>
     <a th:href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'>게시글 삭제</a>
 
+    <div id="cmtList">
+        <div th:each="cmt:${cmtList}">
+            <div>
+                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">작성자 : [[${cmt.userIdx}]]</span>
+                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">내용 : [[${cmt.content}]]</span>
+                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">등록일 : [[${cmt.insertdate}]]</span>
+                <button th:onclick="|location.href='@{/cmt/modify(cIdx = ${cmt.getCmtIdx()})}'|">수정</button>
+                <button th:onclick="|location.href='@{/cmt/cinsert(cIdx = ${cmt.getParent()})}'|">답글</button>
+                <button th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|">삭제</button>
+                <span>[[${cmt.floor}]]</span>
+            </div>
+        </div>
+
+    </div>
+
 </body>
+<script th:inline="javascript">
+    let cmtOrderList = [[${cmtList}]]
+    //cmtOrderList.forEach((item)=> console.log(item));
+
+</script>
 </html>

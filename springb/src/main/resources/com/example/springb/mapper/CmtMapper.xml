@@ -8,13 +8,13 @@
         SELECT * FROM cmt;
     </select>
     <select id="findById" parameterType="Integer" resultType="com.example.springb.domain.CmtVo">
-        SELECT * FROM cmt where boardIdx = #{bIdx} order by cmtorder;
+        SELECT * FROM cmt where boardIdx = #{bIdx} order by cmtgroup, cmtorder;
     </select>
-    <select id="findUserName" parameterType="Integer" resultType="com.example.springb.domain.UserVo">
-        select user.name from user inner join board on user.userIdx= cmt.userIdx where cmdIdx=#{cmtIdx};
+    <select id="findBoardIdx" parameterType="Integer" resultType="Integer">
+        select cmt.boardIdx from cmt where cmdIdx=#{cmtIdx};
     </select>
     <delete id="cmtDelete" parameterType="Integer">
-        delete from cmt where cmtIdx =#{cmtIdx};
+        delete from cmt where cmtIdx=#{cmtIdx};
     </delete>
     <update id="cmtModify" parameterType="com.example.springb.domain.CmtVo">
         update board set content = #{content} where cmtIdx= #{cmtIdx};
