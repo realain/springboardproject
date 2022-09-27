@@ -34,7 +34,7 @@ public class BoardController {
     public String boardDetail(@RequestParam("bIdx")int bIdx , Model model)throws Exception{
         model.addAttribute("bIdx",boardService.findById(bIdx));
         model.addAttribute("uName",boardService.findUserName(bIdx));
-        model.addAttribute("cmtList",cmtService.findById(bIdx));
+        model.addAttribute("cmtList",cmtService.findAll(bIdx));
 
         return "board/detail";
     }

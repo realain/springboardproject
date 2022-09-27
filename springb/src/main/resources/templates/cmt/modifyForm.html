@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang ="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form name="readForm" action="/cmt/modify" method="post">
+    <div>
+        <label>댓글번호</label>
+        <input id="cmtIdx" name="cmtIdx" readonly="readonly" th:value="${cmt.cmtIdx}">
+    </div>
+    <div>
+        <label>작성자</label>
+        <input name="writer" readonly="readonly" th:value="${uName.name}">
+    </div>
+    <div>
+        <label>내용</label>
+        <textarea id="content" name="content" rows="20" cols="20">[[${cmt.content}]]</textarea>
+    </div>
+    <div>
+        <label>작성일</label>
+        <input name="insertDate" readonly="readonly" th:value="${cmt.insertdate}">
+    </div>
+
+    <button id="modify_btn" type="submit">수정완료</button>
+    <button type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${cmt.boardIdx})}'|">돌아가기</button>
+</form>
+</body>
+<script type="text/javascript">
+    $(document).ready(function (){
+        const modifyForm = $("form[name='readForm']");
+        $("modify_btn").on("click", function (){
+            modifyForm.attr("action","/cmt/modify");
+            modifyForm.attr("method", "get");
+            modifyForm.submit();
+        })
+    })
+</script>
+</html>

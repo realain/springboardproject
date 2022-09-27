@@ -11,9 +11,11 @@ public interface CmtMapper {
 
     int cmtNum()throws Exception;
 
-    List<CmtVo> findAll()throws Exception;
+    CmtVo findById(int cmtIdx)throws Exception;
 
-    List<CmtVo> findById(int cmtIdx)throws Exception;
+    List<CmtVo> findAll(int cmtIdx)throws Exception;
+
+    UserVo findUserName(int boardIdx)throws Exception;
 
     int findBoardIdx(int cmtIdx)throws Exception;
 

@@ -4,11 +4,14 @@
     <select id="cmtNum" resultType="int">
         select count(cmtIdx) as cIdx from cmd;
     </select>
-    <select id="findAll" resultType="com.example.springb.domain.CmtVo">
-        SELECT * FROM cmt;
+    <select id="findAll" parameterType="Integer" resultType="com.example.springb.domain.CmtVo">
+        SELECT * FROM cmt where boardIdx = #{bIdx} order by cmtgroup, cmtorder;
     </select>
     <select id="findById" parameterType="Integer" resultType="com.example.springb.domain.CmtVo">
-        SELECT * FROM cmt where boardIdx = #{bIdx} order by cmtgroup, cmtorder;
+        SELECT * FROM cmt where cmtIdx = #{cmtIdx};
+    </select>
+    <select id="findUserName" parameterType="Integer" resultType="com.example.springb.domain.UserVo">
+        select user.name from user inner join cmt on user.userIdx= cmt.userIdx where cmtIdx=#{cmtIdx};
     </select>
     <select id="findBoardIdx" parameterType="Integer" resultType="Integer">
         select cmt.boardIdx from cmt where cmdIdx=#{cmtIdx};

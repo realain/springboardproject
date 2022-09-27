@@ -6,7 +6,6 @@ import com.example.springb.mapper.CmtMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,11 +20,8 @@ public class CmtService {
     public int cmtNum()throws Exception{
         return cmtMapper.cmtNum();
     }
-    public List<CmtVo> cmtList() throws Exception {
-        return cmtMapper.findAll();
-    }
-    public List<CmtVo> findById(int cmtIdx)throws Exception{
-        return cmtMapper.findById(cmtIdx);
+    public List<CmtVo> findAll(int cmtIdx)throws Exception{
+        return cmtMapper.findAll(cmtIdx);
     }
     public int findBoardIdx(int cmtIdx)throws Exception{
         return cmtMapper.findBoardIdx(cmtIdx);
@@ -38,5 +34,11 @@ public class CmtService {
     }
     public void cmtModify(CmtVo cmtVo)throws Exception{
         cmtMapper.cmtModify(cmtVo);
+    }
+    public UserVo findUserName(int cmtIdx)throws Exception{
+        return cmtMapper.findUserName(cmtIdx);
+    }
+    public CmtVo findById(int cmtIdx)throws Exception{
+        return cmtMapper.findById(cmtIdx);
     }
 }

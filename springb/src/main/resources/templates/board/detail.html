@@ -41,10 +41,10 @@
     <div id="cmtList">
         <div th:each="cmt:${cmtList}">
             <div>
-                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">작성자 : [[${cmt.userIdx}]]</span>
-                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">내용 : [[${cmt.content}]]</span>
-                <span th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">등록일 : [[${cmt.insertdate}]]</span>
-                <button th:onclick="|location.href='@{/cmt/modify(cIdx = ${cmt.getCmtIdx()})}'|">수정</button>
+                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->작성자 : [[${cmt.userIdx}]]</span>
+                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->내용 : [[${cmt.content}]]</span>
+                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->등록일 : [[${cmt.insertdate}]]</span>
+                <button th:onclick="|location.href='@{/cmt/modifyForm(cIdx = ${cmt.getCmtIdx()})}'|">수정</button>
                 <button th:onclick="|location.href='@{/cmt/cinsert(cIdx = ${cmt.getParent()})}'|">답글</button>
                 <button th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|">삭제</button>
                 <span>[[${cmt.floor}]]</span>
