@@ -29,5 +29,9 @@ public class UserController {
         model.addAttribute("uList", userService.userList());
         return "user/list";
     }
+    @GetMapping("/login")
+    public String login(){
+        return "user/login";
+    }
 
 }

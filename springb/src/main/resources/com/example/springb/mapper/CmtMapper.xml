@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springb.mapper.CmtMapper">
+    <select id="cmtNum" resultType="int">
+        select count(cmtIdx) as cIdx from cmd;
+    </select>
+    <select id="findAll" resultType="com.example.springb.domain.CmtVo">
+        SELECT * FROM cmt;
+    </select>
+    <select id="findById" parameterType="Integer" resultType="com.example.springb.domain.CmtVo">
+        SELECT * FROM cmt where boardIdx = #{bIdx} order by cmtorder;
+    </select>
+    <select id="findUserName" parameterType="Integer" resultType="com.example.springb.domain.UserVo">
+        select user.name from user inner join board on user.userIdx= cmt.userIdx where cmdIdx=#{cmtIdx};
+    </select>
+    <delete id="cmtDelete" parameterType="Integer">
+        delete from cmt where cmtIdx =#{cmtIdx};
+    </delete>
+    <update id="cmtModify" parameterType="com.example.springb.domain.CmtVo">
+        update board set content = #{content} where cmtIdx= #{cmtIdx};
+    </update>
+    <insert id="cmtInsert" parameterType="com.example.springb.domain.CmtVo">
+        INSERT INTO cmt
+            (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtorder`,`group`)
+        VALUES
+            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtorder},#{group});
+    </insert>
+</mapper>

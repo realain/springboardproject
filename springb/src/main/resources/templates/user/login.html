@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<h1>로그인 페이지</h1>
+    <form name="readForm" action="userLogin">
+        <div>
+            <label>id: </label>
+            <input type="text" name="userId">
+        </div>
+        <div>
+            <label>pw: </label>
+            <input type="password" name="userPw">
+        </div>
+    </form>
+    <button id="login_btn" type="submit">로그인</button>
+    <button type="button" onclick="location.href='/'">돌아가기</button>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function (){
+        const loginForm = $("form[name='readForm']");
+        $("login_btn").on("click", function (){
+            loginForm.attr("action","/user/userLogin");
+            loginForm.attr("method", "get");
+            loginForm.submit();
+        })
+    })
+</script>
+</html>

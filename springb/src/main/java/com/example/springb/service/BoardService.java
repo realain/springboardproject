@@ -23,10 +23,10 @@ public class BoardService {
     }
 
 
-    public int boardNum(){
+    public int boardNum()throws Exception{
         return boardMapper.boardNum();
     }
-    public List<BoardVo> boardList(){
+    public List<BoardVo> boardList()throws Exception{
         return boardMapper.findAll();
     }
     public BoardVo findById(int boardIdx)throws Exception{
@@ -40,5 +40,9 @@ public class BoardService {
     }
     public void boardModify(BoardVo boardVo)throws Exception{
         boardMapper.boardModify(boardVo);
+    }
+
+    public void boardInsert(BoardVo boardVo)throws Exception{
+        boardMapper.boardInsert(boardVo);
     }
 }

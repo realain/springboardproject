@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper
 public interface BoardMapper {
 
-    int boardNum();
+    int boardNum()throws Exception;
 
-    List<BoardVo> findAll();
+    List<BoardVo> findAll()throws Exception;
 
     BoardVo findById(int boardIdx)throws Exception;
 
@@ -20,4 +20,6 @@ public interface BoardMapper {
     int boardDelete(int boardIdx)throws Exception;
 
     void boardModify(BoardVo boardVo)throws Exception;
+
+    void boardInsert(BoardVo boardVo)throws  Exception;
 }

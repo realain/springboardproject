@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang ="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form name="readForm" action="/board/insert" method="post">
+    <div>
+        <label>작성자</label>
+        <input name="userIdx" value="1" >
+    </div>
+    <div>
+        <label>제목</label>
+        <textarea id="title" name="title" rows="3" cols="20"></textarea>
+    </div>
+    <div>
+        <label>내용</label>
+        <textarea id="content" name="content" rows="20" cols="20"></textarea>
+    </div>
+<!--    <div>
+        <label>작성일</label>
+        <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
+    </div>-->
+
+    <button id="modify_btn" type="submit">등록완료</button>
+    <button type="button" onclick="location.href='/board/list'">돌아가기</button>
+</form>
+</body>
+<script type="text/javascript">
+    $(document).ready(function (){
+        const modifyForm = $("form[name='readForm']");
+        $("insert_btn").on("click", function (){
+            modifyForm.attr("action","/board/insert");
+            modifyForm.attr("method", "get");
+            modifyForm.submit();
+        })
+    })
+</script>
+</html>

@@ -6,8 +6,9 @@
     <title>게시판</title>
 </head>
 <body>
+<a href="/">HOME</a>
     <h1>게시글 목록</h1>
-    <table border="1">
+    <table>
         <tr>
             <th>번호</th>
             <th>작성자</th>
@@ -24,5 +25,6 @@
             <td th:text="${boardList.insertdate}"></td>
         </tr>
     </table>
+    <a href="/board/insertForm">등록</a>
 </body>
 </html>

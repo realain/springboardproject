@@ -19,4 +19,10 @@
     <update id="boardModify" parameterType="com.example.springb.domain.BoardVo">
         update board set title = #{title}, content = #{content} where boardIdx= #{boardIdx};
     </update>
+    <insert id="boardInsert" parameterType="com.example.springb.domain.BoardVo">
+        INSERT INTO board
+        (`userIdx`, `title`, `content`)
+        VALUES
+        (#{userIdx}, #{title}, #{content});
+    </insert>
 </mapper>

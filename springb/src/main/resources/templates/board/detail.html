@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<html lang ="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <h1>제목</h1>
-    <h2 th:text="${bIdx.title}"></h2>
+<a href="/">HOME</a>
+    <h2>게시글 detail</h2>
     <div>
         <div>
             <label>번호 :</label>
@@ -18,6 +18,10 @@
             <span th:text="${uName.name}"></span>
         </div>
         <div>
+            <label>제목 :</label>
+            <span th:text="${bIdx.title}"></span>
+        </div>
+        <div>
             <label>내용 :</label>
             <span th:text="${bIdx.content}"></span>
         </div>
@@ -26,8 +30,31 @@
             <span th:text="${bIdx.insertdate}"></span>
         </div>
     </div>
-    <a th:href='@{/board/modifyForm(bIdx = ${bIdx.boardIdx})}'>수정</a>
-    <a th:href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'>삭제</a>
+    <!--댓글 부분-->
+    <div th:if="${cmtList ==null}">
+        <p>댓글이 없음</p>
+    </div>
+    <table id="cmtList">
+        <tr>
+            <th>댓글 작성자</th>
+            <th>내용</th>
+            <th>작성일</th>
+            <th>수정</th>
+            <th>답글등록</th>
+            <th>삭제버튼</th>
+        </tr>
+        <tr th:each="cmt:${cmtList}">
+            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.userIdx}]]</td>
+            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.content}]]</td>
+            <td th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|">[[${cmt.insertdate}]]</td>
+            <td th:onclick="|location.href='@{/cmt/modify(cIdx = ${cmt.getCmtIdx()})}'|">수정</td>
+            <td th:onclick="|location.href='@{/cmt/insert(cIdx = ${cmt.getParent()})}'|">답글</td>
+            <td th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getParent()})}'|">삭제</td>
+        </tr>
+
+    </table>
+    <a th:href='@{/board/modifyForm(bIdx = ${bIdx.boardIdx})}'>게시글 수정</a>
+    <a th:href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'>게시글 삭제</a>
 
 </body>
 </html>
