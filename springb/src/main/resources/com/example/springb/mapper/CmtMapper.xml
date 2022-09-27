@@ -20,7 +20,7 @@
         delete from cmt where cmtIdx=#{cmtIdx};
     </delete>
     <update id="cmtModify" parameterType="com.example.springb.domain.CmtVo">
-        update board set content = #{content} where cmtIdx= #{cmtIdx};
+        update cmt set content = #{content} where cmtIdx= #{cmtIdx};
     </update>
     <insert id="cmtInsert" parameterType="com.example.springb.domain.CmtVo">
         INSERT INTO cmt
