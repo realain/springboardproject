@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang ="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+<form name="readForm" action="/cmt/cInsert" method="post">
+    <div>
+        <label>작성자</label>
+        <input id="userIdx" name="userIdx" th:value="${cmt.userIdx}" >
+    </div>
+    <div>
+        <label>게시판</label>
+        <input id="boardIdx" name="boardIdx" th:value="${cmt.boardIdx}">
+    </div>
+    <div>
+        <label>제목</label>
+        <textarea id="title" name="title" rows="3" cols="20"></textarea>
+    </div>
+    <div>
+        <label>내용</label>
+        <textarea id="content" name="content" rows="20" cols="20"></textarea>
+    </div>
+    <div>
+        <label>parent</label>
+        <input type="text" id="parent" name="parent" th:value="${cmt.cmtIdx}">
+    </div>
+    <div>
+        <label>floor</label>
+        <input type="text" id="floor" name="floor" th:value="${cmt.floor}+1">
+    </div>
+    <div>
+        <label>cmtorder</label>
+        <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}+1">
+    </div>
+    <div>
+        <label>cmtgroup</label>
+        <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.group}">
+    </div>
+<!--    <div>
+        <label>작성일</label>
+        <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
+    </div>-->
+
+    <button id="insert_btn" type="submit">등록완료</button>
+    <button type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${cmt.boardIdx})}'|">돌아가기</button>
+    <!--th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|"-->
+</form>
+</body>
+<script type="text/javascript">
+    $(document).ready(function (){
+        const cInsertForm = $("form[name='readForm']");
+        $("insert_btn").on("click", function (){
+            cInsertForm.attr("action","/cmt/cInsert");
+            cInsertForm.attr("method", "get");
+            cInsertForm.submit();
+        })
+    })
+</script>
+</html>

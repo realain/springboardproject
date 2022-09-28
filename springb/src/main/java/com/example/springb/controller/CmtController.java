@@ -36,4 +36,10 @@ public class CmtController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/cInsertForm")
+    public String cInsertForm(@RequestParam("cIdx")int cmtIdx, Model model)throws Exception{
+        model.addAttribute("cmt",cmtService.findById(cmtIdx));
+        model.addAttribute("uName",cmtService.findUserName(cmtIdx));
+        return "cmt/cInsertForm";
+    }
 }
