@@ -13,7 +13,7 @@ public class CmtVo {
     private int parent;
     private int floor;
     private int cmtorder;
-    private int group;
+    private int cmtgroup;
 
     public int getCmtIdx() {
         return cmtIdx;
@@ -79,12 +79,12 @@ public class CmtVo {
         this.cmtorder = cmtorder;
     }
 
-    public int getGroup() {
-        return group;
+    public int getCmtgroup() {
+        return cmtgroup;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
+    public void setCmtgroup(int cmtgroup) {
+        this.cmtgroup = cmtgroup;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class CmtVo {
                 ", parent=" + parent +
                 ", floor=" + floor +
                 ", cmtorder=" + cmtorder +
-                ", group=" + group +
+                ", cmtgroup=" + cmtgroup +
                 '}';
     }
 }

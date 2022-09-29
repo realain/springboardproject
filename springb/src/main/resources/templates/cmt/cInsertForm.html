@@ -17,10 +17,6 @@
         <input id="boardIdx" name="boardIdx" th:value="${cmt.boardIdx}">
     </div>
     <div>
-        <label>제목</label>
-        <textarea id="title" name="title" rows="3" cols="20"></textarea>
-    </div>
-    <div>
         <label>내용</label>
         <textarea id="content" name="content" rows="20" cols="20"></textarea>
     </div>
@@ -34,11 +30,11 @@
     </div>
     <div>
         <label>cmtorder</label>
-        <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}+1">
+        <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}">
     </div>
     <div>
         <label>cmtgroup</label>
-        <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.group}">
+        <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.cmtgroup}">
     </div>
 <!--    <div>
         <label>작성일</label>
@@ -47,7 +43,6 @@
 
     <button id="insert_btn" type="submit">등록완료</button>
     <button type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${cmt.boardIdx})}'|">돌아가기</button>
-    <!--th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|"-->
 </form>
 </body>
 <script type="text/javascript">

@@ -24,4 +24,8 @@ public interface CmtMapper {
     void cmtInsert(CmtVo cmtVo)throws Exception;
 
     void cmtModify(CmtVo cmtVo)throws Exception;
+
+    void cInsert(CmtVo cmtVo)throws Exception;
+
+    Integer cmtMaxGroup(int boardIdx)throws Exception;
 }

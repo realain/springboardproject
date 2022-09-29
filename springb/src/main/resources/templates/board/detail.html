@@ -52,11 +52,41 @@
         </div>
 
     </div>
+    <form name="readForm" action="/cmt/cmtInsert" method="post">
+        <div hidden>
+            <label>작성자</label>
+            <input id="userIdx" name="userIdx" value=1 >
+        </div>
+        <div hidden>
+            <label>게시판</label>
+            <input id="boardIdx" name="boardIdx" th:value="${bIdx.boardIdx}">
+        </div>
+        <div>
+            <label>댓글 작성</label>
+            <textarea id="content" name="content" rows="3" cols="60"></textarea>
+        </div>
+        <div th:if="${maxGroup !=null}" hidden>
+            <label>cmtgroup</label>
+            <input type="text" id="cmtgroup" name="cmtgroup" th:value="${maxGroup}">
+        </div>
+        <!--    <div>
+                <label>작성일</label>
+                <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
+            </div>-->
 
+        <button id="insert_btn" type="submit">등록완료</button>
+    </form>
 </body>
-<script th:inline="javascript">
-    let cmtOrderList = [[${cmtList}]]
-    //cmtOrderList.forEach((item)=> console.log(item));
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function (){
+        const cInsertForm = $("form[name='readForm']");
+        $("insert_btn").on("click", function (){
+            cInsertForm.attr("action","/cmt/cmtInsert");
+            cInsertForm.attr("method", "get");
+            cInsertForm.submit();
+        })
+    })
+</script>
 
 </script>
 </html>

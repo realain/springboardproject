@@ -35,6 +35,7 @@ public class BoardController {
         model.addAttribute("bIdx",boardService.findById(bIdx));
         model.addAttribute("uName",boardService.findUserName(bIdx));
         model.addAttribute("cmtList",cmtService.findAll(bIdx));
+        model.addAttribute("maxGroup",cmtService.cmtMaxGroup(bIdx));
 
         return "board/detail";
     }

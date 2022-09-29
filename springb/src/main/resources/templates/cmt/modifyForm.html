@@ -8,11 +8,11 @@
 </head>
 <body>
 <form name="readForm" action="/cmt/modify" method="post">
-    <div>
+    <div hidden>
         <label>댓글번호</label>
         <input id="cmtIdx" name="cmtIdx" readonly="readonly" th:value="${cmt.cmtIdx}">
     </div>
-    <div>
+    <div hidden>
         <label>작성자</label>
         <input name="writer" readonly="readonly" th:value="${uName.name}">
     </div>

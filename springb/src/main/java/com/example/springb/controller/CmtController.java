@@ -35,11 +35,20 @@ public class CmtController {
         cmtService.cmtModify(cmtVo);
         return "redirect:/board/list";
     }
-
     @GetMapping("/cInsertForm")
     public String cInsertForm(@RequestParam("cIdx")int cmtIdx, Model model)throws Exception{
         model.addAttribute("cmt",cmtService.findById(cmtIdx));
         model.addAttribute("uName",cmtService.findUserName(cmtIdx));
         return "cmt/cInsertForm";
+    }
+    @RequestMapping(value = "/cInsert", method = RequestMethod.POST)
+    public String cInsert(CmtVo cmtVo)throws Exception{
+        cmtService.cInsert(cmtVo);
+        return "redirect:/board/list";
+    }
+    @RequestMapping(value = "/cmtInsert", method = RequestMethod.POST)
+    public String cmtInsert(CmtVo cmtVo)throws Exception{
+        cmtService.cmtInsert(cmtVo);
+        return "redirect:/board/list";
     }
 }

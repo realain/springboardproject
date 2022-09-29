@@ -8,7 +8,7 @@
 </head>
 <body>
 <form name="readForm" action="/board/modify" method="post">
-    <div>
+    <div hidden>
         <label>글번호</label>
         <input id="boardIdx" name="boardIdx" readonly="readonly" th:value="${board.boardIdx}">
     </div>

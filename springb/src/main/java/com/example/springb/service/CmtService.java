@@ -41,4 +41,10 @@ public class CmtService {
     public CmtVo findById(int cmtIdx)throws Exception{
         return cmtMapper.findById(cmtIdx);
     }
+    public void cInsert(CmtVo cmtVo)throws Exception{
+        cmtMapper.cInsert(cmtVo);
+    }
+    public Integer cmtMaxGroup(int boardIdx)throws Exception{
+        return cmtMapper.cmtMaxGroup(boardIdx);
+    }
 }

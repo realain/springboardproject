@@ -24,8 +24,18 @@
     </update>
     <insert id="cmtInsert" parameterType="com.example.springb.domain.CmtVo">
         INSERT INTO cmt
-            (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtorder`,`group`)
+            (`userIdx`,`content`,`boardIdx`,`cmtgroup`)
         VALUES
-            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtorder},#{group});
+            (#{userIdx}, #{content},#{boardIdx},#{cmtgroup}+1);
     </insert>
+    <insert id="cInsert" parameterType="com.example.springb.domain.CmtVo">
+        UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = {#cmtgroup} and cmtorder > #{cmtorder};
+        INSERT INTO cmt
+        (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtgroup`,`cmtorder`)
+        VALUES
+            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtgroup}, (select cmtorder from cmt as 순서 where cmtIdx = #{cmtIdx})+1) ;
+    </insert>
+    <select id="cmtMaxGroup" resultType="integer">
+        select MAX(cmtgroup) from cmt where boardIdx = #{boradIdx};
+    </select>
 </mapper>
