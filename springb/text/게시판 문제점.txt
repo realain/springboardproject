@@ -1,0 +1,142 @@
+현재 상태에서 같은 댓글에 대한 답글이 달릴때 순서가 자꾸 땡겨짐
+같은 floor에 같은 parent를 가지는 댓글이 이미 존재할때 같은 조건의 모든 cmtorder중 max값을 가져와서+1을 해야함
+마찬가지로 그 뒤의 cmtorder값도 전부 +1추가 
+
+
+(select max(cmtorder) from cmt where floor = #{floor} and parent = #{parent});
+
+if(select count(*) from cmt where floor=#{floor} and parent = #{parent}){
+    UPDATE cmt set cmtorder = cmtorder+1 where floor = #{floor} and parent = #{parent};
+
+    INSERT INTO cmt
+            (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtgroup`,`cmtorder`)
+        VALUES
+            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtgroup}, (select max(cmtorder) from cmt where floor = #{floor} and parent = #{parent})+1);
+}else {
+    UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = #{cmtgroup} and cmtorder > #{cmtorder};
+        INSERT INTO cmt
+            (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtgroup`,`cmtorder`)
+        VALUES
+            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtgroup}, (select cmtorder from cmt as 순서 where cmtIdx = #{cmtIdx})+1);
+}
+
+UPDATE cmt set cmtorder = cmtorder+1 where cmtorder = param_cmtrow and cmtgroup = param_cmtgroup;
+
+층수가 같음 
+
+1 
+
+
+(5, 3, 3 ,0 )
+
+4에다 답글을 단다 -> (4의 cmtOrder) + (4가 갖고있는 자식들 개수)
+
+1  ( X, 0, 0, 0 )
+ㄴ 4 ( 1, 1, 1, 0 )
+    ㄴ 5  ( 4, 2, 2, 0 )
+        ㄴ 6 ( 5, 3, 3, 0 )
+            ㄴ 12 ( 6, 4, 4, 0)
+    ㄴ 7 ( 4, 2, 5, 0 )
+        ㄴ 13 ( 7, 3, 6, 0)
+        ㄴ넣을거(7,3,7,0)
+ㄴ 10 ( 1, 1, 7, 0)
+   ㄴ 11 ( 10, 2, 8, 0 )
+2 ( X, 0, 0, 1 )
+ㄴ 8 ( 2, 1, 1, 1 )
+ㄴ 9 ( 2, 1, 2, 1 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------
+
+1  ( X, 0, 0, 0 )
+ㄴ 4 ( 1, 1, 1, 0 )
+    ㄴ 5  ( 4, 2, 2, 0 )
+        ㄴ 6 ( 5, 3, 3, 0 )
+    ㄴ 7 ( 4, 2, 4, 0 )
+ㄴ 10 ( 1, 1, 5, 0 )
+   ㄴ 11 ( 10, 2, 6, 0 )
+2 ( X, 0, 0, 1 )
+ㄴ 8 ( 2, 1, 1, 1 )
+ㄴ 9 ( 2, 1, 2, 1 )
+
+
+
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_insert_logic`(
+    in param_useridx integer,
+    in param_content varchar(8000),
+    in param_boardidx integer,
+    in param_cmtgroup integer,
+	in param_floor integer,
+    in param_parent integer,
+    in param_cmtorder integer,
+    in param_cmtidx integer
+)
+BEGIN
+	declare param_num integer;
+	declare param_cmtrow integer;
+
+	select count(*) into param_num from cmt where floor= param_floor and parent = param_parent;
+    
+    if param_num > 0 then
+    select cmtorder into param_cmtrow from cmt where cmtorder > (select cmtorder from cmt as 순서조정 where cmtIdx = param_cmtIdx) ;
+    UPDATE cmt set cmtorder = cmtorder+1 where cmtorder = param_cmtrow and cmtgroup = param_cmtgroup;
+     INSERT INTO cmt
+            (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
+        VALUES
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select max(cmtorder) from cmt where floor = param_floor and parent = param_parent)+1);
+    else
+    UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = param_cmtgroup and cmtorder > param_cmtorder;
+        INSERT INTO cmt
+            (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
+        VALUES
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select cmtorder from cmt as 순서 where cmtIdx = param_cmtidx)+1);
+    end if;
+END
+
+
+{CALL c_insert_logic(
+            #{userIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{content, mode=IN, jdbcType=VARCHAR, javaType=string}
+            #{boardIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtgroup, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{floor, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{parent, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtorder, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            )}
+
+{CALL c_insert_logic(
+            #{userIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{content, mode=IN, jdbcType=VARCHAR, javaType=string}
+            #{boardIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtgroup, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{floor, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{parent, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtorder, mode=IN, jdbcType=INTEGER, javaType=int}
+            #{cmtIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            )}
+
+
+
+ UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = {#cmtgroup} and cmtorder > #{cmtorder};
+        INSERT INTO cmt
+        (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtgroup`,`cmtorder`)
+        VALUES
+            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtgroup}, (select cmtorder from cmt as 순서 where cmtIdx = #{cmtIdx})+1) ;
+
+
+'11', '1', '12313', '6', '2022-09-29 15:44:54', NULL, '0', '0', '1'
