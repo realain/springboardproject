@@ -28,12 +28,19 @@
         VALUES
             (#{userIdx}, #{content},#{boardIdx},#{cmtgroup}+1);
     </insert>
-    <insert id="cInsert" parameterType="com.example.springb.domain.CmtVo">
-        UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = {#cmtgroup} and cmtorder > #{cmtorder};
-        INSERT INTO cmt
-        (`userIdx`,`content`,`boardIdx`,`parent`,`floor`,`cmtgroup`,`cmtorder`)
-        VALUES
-            (#{userIdx}, #{content},#{boardIdx},#{parent},#{floor},#{cmtgroup}, (select cmtorder from cmt as 순서 where cmtIdx = #{cmtIdx})+1) ;
+    <insert id="cInsert" parameterType="com.example.springb.domain.CmtVo"  statementType="CALLABLE">
+        CALL c_insert_logic(
+                #{userIdx, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{content, mode=IN, jdbcType=VARCHAR, javaType=string},
+                #{boardIdx, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{cmtgroup, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{floor, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{parent, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{cmtorder, mode=IN, jdbcType=INTEGER, javaType=int},
+                #{cmtIdx, mode=IN, jdbcType=INTEGER, javaType=int}
+            )
+
+
     </insert>
     <select id="cmtMaxGroup" resultType="integer">
         select MAX(cmtgroup) from cmt where boardIdx = #{boradIdx};

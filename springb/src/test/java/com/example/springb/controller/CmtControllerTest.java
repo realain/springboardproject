@@ -7,10 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CmtControllerTest {
@@ -24,16 +20,13 @@ class CmtControllerTest {
     @Transactional
     void cInsert() throws Exception{
         CmtVo cmtVo =new CmtVo();
-        /*LocalDateTime date1 = LocalDateTime.now();
-        cmtVo.setInsertdate(date1);*/
-        cmtVo.setUserIdx(1L);
-        cmtVo.setCmtgroup(0);
-        cmtVo.setCmtIdx(7);
+        cmtVo.setUserIdx(1);
+        cmtVo.setCmtgroup(1);
         cmtVo.setContent("넣을거");
-        cmtVo.setParent(7);
+        cmtVo.setParent(2);
         cmtVo.setBoardIdx(1);
-        cmtVo.setFloor(3);
-        cmtVo.setCmtorder(5);
+        cmtVo.setFloor(1);
+        cmtVo.setCmtorder(0);
 
         cmtController.cInsert(cmtVo);
 

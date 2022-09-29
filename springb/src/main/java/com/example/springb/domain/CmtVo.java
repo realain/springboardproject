@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class CmtVo {
     private int cmtIdx;
-    private Long userIdx;
+    private int userIdx;
     private String content;
     private int boardIdx;
     private LocalDateTime insertdate;
@@ -23,11 +23,11 @@ public class CmtVo {
         this.cmtIdx = cmtIdx;
     }
 
-    public Long getUserIdx() {
+    public int getUserIdx() {
         return userIdx;
     }
 
-    public void setUserIdx(Long userIdx) {
+    public void setUserIdx(int userIdx) {
         this.userIdx = userIdx;
     }
 
