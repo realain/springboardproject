@@ -158,20 +158,12 @@ BEGIN
     select count(*) into param_num from cmt where floor=param_floor and parent = param_parent ;
     select Max(cmtorder) into param_cmtnum from cmt where floor >= param_floor;
     -- 대댓글
-    if param_num = 1 then
-        UPDATE cmt set cmtorder = cmtorder+1 where cmtorder >
-                                                   (select cmtorder from (
-                                                                             (select count(*) from cmt as cmt_a1 where floor >= param_floor  and cmtgroup = param_cmtgroup)) cmt1);
+    if param_num > 0 then
+        UPDATE cmt set cmtorder = cmtorder+param_num where cmtorder > param_cmtnum;
         INSERT INTO cmt
         (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
         VALUES
-            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select count(*) from cmt as cmt_a1 where floor >= param_floor)+1);
-    elseif param_num > 1 then
-        UPDATE cmt set cmtorder = cmtorder+1 where cmtorder > param_cmtnum;
-        INSERT INTO cmt
-        (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
-        VALUES
-            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup,param_cmtnum+1);
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup,param_cmtnum+param_num);
     else
         -- 대댓글이 하나도 없을 경우
         UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = param_cmtgroup and cmtorder > param_cmtorder and boardIdx = param_boardidx;
