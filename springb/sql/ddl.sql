@@ -137,3 +137,47 @@ VALUES
 
 select * from cmt order by cmtorder;
 
+
+-- 가장 잘 동작하는 프로시저
+-- 지금 문제점 / 답글의 답글 사이에 답글이 존재할때 순서가 꼬여서 들어감
+-- elseif param_num > 1 then 부분에서 해결을 해야함 아직 고민중 주말동안 해결 ㄱ
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_insert_logic3`(
+    in param_useridx integer,
+    in param_content varchar(8000),
+    in param_boardidx integer,
+    in param_cmtgroup integer,
+    in param_floor integer,
+    in param_parent integer,
+    in param_cmtorder integer,
+    in param_cmtidx integer
+)
+BEGIN
+    declare param_num integer;
+    declare param_cmtnum integer;
+    select count(*) into param_num from cmt where floor=param_floor and parent = param_parent ;
+    select Max(cmtorder) into param_cmtnum from cmt where floor >= param_floor;
+    -- 대댓글
+    if param_num = 1 then
+        UPDATE cmt set cmtorder = cmtorder+1 where cmtorder >
+                                                   (select cmtorder from (
+                                                                             (select count(*) from cmt as cmt_a1 where floor >= param_floor  and cmtgroup = param_cmtgroup)) cmt1);
+        INSERT INTO cmt
+        (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
+        VALUES
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select count(*) from cmt as cmt_a1 where floor >= param_floor)+1);
+    elseif param_num > 1 then
+        UPDATE cmt set cmtorder = cmtorder+1 where cmtorder > param_cmtnum;
+        INSERT INTO cmt
+        (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
+        VALUES
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup,param_cmtnum+1);
+    else
+        -- 대댓글이 하나도 없을 경우
+        UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = param_cmtgroup and cmtorder > param_cmtorder and boardIdx = param_boardidx;
+        INSERT INTO cmt
+        (userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
+        VALUES
+            (param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup,param_cmtorder+1);
+    end if;
+END
