@@ -82,17 +82,10 @@
             cInsertForm.attr("method", "get");
             cInsertForm.submit();
         })
-        let floor1 = $('div[name=floor1]');
-        floor1.css('margin-left', '30px');
-        let floor2 = $('div[name=floor2]');
-        floor2.css('margin-left', '60px');
-        let floor3 = $('div[name=floor3]');
-        floor3.css('margin-left', '90px');
-        let floor4 = $('div[name=floor4]');
-        floor4.css('margin-left', '120px');
-        let floor5 = $('div[name=floor5]');
-        floor5.css('margin-left', '150px');
-
+        for(let i = 0; i<100; i++){
+            let floor_select = $('div[name=floor'+i+']');
+            floor_select.css('margin-left', i*20+'px');
+        }
     })
 </script>
 

@@ -8,31 +8,31 @@
 </head>
 <body>
 <form name="readForm" action="/cmt/cInsert" method="post">
-    <div>
+    <div hidden>
         <label>작성자</label>
         <input id="userIdx" name="userIdx" th:value="${cmt.userIdx}" >
     </div>
-    <div>
+    <div hidden>
         <label>게시판</label>
         <input id="boardIdx" name="boardIdx" th:value="${cmt.boardIdx}">
     </div>
     <div>
         <label>내용</label>
-        <textarea id="content" name="content" rows="20" cols="20"></textarea>
+        <textarea id="content" name="content" rows="3" cols="60"></textarea>
     </div>
-    <div>
+    <div hidden>
         <label>parent</label>
         <input type="text" id="parent" name="parent" th:value="${cmt.cmtIdx}">
     </div>
-    <div>
+    <div hidden>
         <label>floor</label>
         <input type="text" id="floor" name="floor" th:value="${cmt.floor}+1">
     </div>
-    <div>
+    <div hidden>
         <label>cmtorder</label>
         <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}">
     </div>
-    <div>
+    <div hidden>
         <label>cmtgroup</label>
         <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.cmtgroup}">
     </div>
