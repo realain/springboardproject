@@ -156,7 +156,7 @@ BEGIN
     declare param_num integer;
     declare param_cmtnum integer;
     select count(*) into param_num from cmt where floor=param_floor and parent = param_parent ;
-    select Max(cmtorder) into param_cmtnum from cmt where floor >= param_floor;
+    select Max(cmtorder) into param_cmtnum from cmt where floor >= param_floor and cmtgroup = param_cmtgroup;
     -- 대댓글
     if param_num > 0 then
         UPDATE cmt set cmtorder = cmtorder+param_num where cmtorder > param_cmtnum;
