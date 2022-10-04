@@ -4,30 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Title</title>
+    <title>게시글 등록</title>
 </head>
+<header th:insert="nav.html"></header>
 <body>
-<form name="readForm" action="/board/insert" method="post">
-    <div>
-        <label>작성자</label>
-        <input name="userIdx" value="1" >
-    </div>
-    <div>
-        <label>제목</label>
-        <textarea id="title" name="title" rows="3" cols="20"></textarea>
-    </div>
-    <div>
-        <label>내용</label>
-        <textarea id="content" name="content" rows="20" cols="20"></textarea>
-    </div>
-<!--    <div>
-        <label>작성일</label>
-        <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
-    </div>-->
+<div class="container">
+    <form name="readForm" action="/board/insert" method="post">
+        <div class="mb-3 row" hidden>
+            <label for="userIdx" class="col-sm-2 col-form-label">작성자</label>
+            <input id="userIdx" name="userIdx" class="form-control" value="1" readonly>
+        </div>
+        <div class="mb-3 row">
+            <label for="title" class="form-label">제목</label>
+            <textarea id="title" name="title" class="form-control"></textarea>
+        </div>
+        <div class="mb-3 row">
+            <label for="content" class="form-label">내용</label>
+            <textarea id="content" name="content" class="form-control" rows="3"></textarea>
+        </div>
+        <!--    <div>
+                <label>작성일</label>
+                <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
+            </div>-->
 
-    <button id="insert_btn" type="submit">등록완료</button>
-    <button type="button" onclick="location.href='/board/list'">돌아가기</button>
-</form>
+        <button class="btn btn-outline-primary"  id="insert_btn" type="submit">등록완료</button>
+        <button class="btn btn-outline-danger"  type="button" onclick="location.href='/board/list'">돌아가기</button>
+    </form>
+</div>
 </body>
 <script type="text/javascript">
     $(document).ready(function (){

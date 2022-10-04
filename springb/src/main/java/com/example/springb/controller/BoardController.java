@@ -26,8 +26,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public String boardList(Model model)throws Exception{
+        int boardNum = boardService.boardNum();
         model.addAttribute("bIdx", boardService.boardNum());
         model.addAttribute("bList", boardService.boardList());
+        model.addAttribute("boardCmtNum", boardService.boardCmtNum(boardNum));
         return "board/list";
     }
     @GetMapping("/detail")
@@ -36,6 +38,11 @@ public class BoardController {
         model.addAttribute("uName",boardService.findUserName(bIdx));
         model.addAttribute("cmtList",cmtService.findAll(bIdx));
         model.addAttribute("maxGroup",cmtService.cmtMaxGroup(bIdx));
+        if(boardService.maxFloor(bIdx) !=null){
+            model.addAttribute("maxFloor",boardService.maxFloor(bIdx));
+        }else{
+            model.addAttribute("maxFloor",0);
+        }
 
         return "board/detail";
     }
@@ -49,12 +56,14 @@ public class BoardController {
     public String boardModifyForm(@RequestParam("bIdx")int bIdx, Model model)throws Exception{
         model.addAttribute("board",boardService.findById(bIdx));
         model.addAttribute("uName",boardService.findUserName(bIdx));
+        model.addAttribute("bIdx",bIdx);
         return "/board/modifyForm";
     }
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String boardModify(BoardVo boardVo) throws Exception{
         boardService.boardModify(boardVo);
-        return "redirect:/board/list";
+        int bIdx = boardVo.getBoardIdx();
+        return "redirect:/board/detail?bIdx="+bIdx;
     }
 
     @GetMapping("/insertForm")

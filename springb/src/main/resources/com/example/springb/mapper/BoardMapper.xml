@@ -4,6 +4,9 @@
     <select id="boardNum" resultType="int">
         select count(boardIdx) as bIdx from board;
     </select>
+    <select id="boardCmtNum" resultType="Integer">
+        select count(cmtIdx) from cmt where boardIdx=#{boardIdx};
+    </select>
     <select id="findAll" resultType="com.example.springb.domain.BoardVo">
         SELECT * FROM board;
     </select>
@@ -21,8 +24,11 @@
     </update>
     <insert id="boardInsert" parameterType="com.example.springb.domain.BoardVo">
         INSERT INTO board
-        (`userIdx`, `title`, `content`)
+            (`userIdx`, `title`, `content`)
         VALUES
-        (#{userIdx}, #{title}, #{content});
+            (#{userIdx}, #{title}, #{content});
     </insert>
+    <select id="maxFloor" resultType="Integer">
+        select Max(floor) from cmt where boardIdx = #{boardIdx};
+    </select>
 </mapper>

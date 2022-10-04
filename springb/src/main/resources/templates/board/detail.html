@@ -4,77 +4,82 @@
 <head>
     <meta charset="UTF-8">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Title</title>
+     <title>게시판 detail</title>
 </head>
+<header th:insert="nav.html"></header>
 <body>
-<a href="/">HOME</a>
-    <h2>게시글 detail</h2>
+<div class="container">
+    <h2>게시글</h2>
     <div>
-        <div>
-            <label>번호 :</label>
-            <span th:text="${bIdx.boardIdx}"></span>
+        <div class="row">
+            <span>번호 : </span>
+            <span id="bIdx" th:text="${bIdx.boardIdx}" readonly></span>
         </div>
-        <div>
-            <label>작성자 :</label>
-            <span th:text="${uName.name}"></span>
+        <div class="mb-3 row" hidden>
+            <label for="bUser" class="form-label">작성자 :</label>
+            <textarea id="bUser" th:text="${uName.name}" readonly></textarea>
         </div>
-        <div>
-            <label>제목 :</label>
-            <span th:text="${bIdx.title}"></span>
+        <div class="row">
+            <span>제목 : </span>
+            <span id="bTitle" th:text="${bIdx.title}" readonly></span>
         </div>
-        <div>
-            <label>내용 :</label>
-            <span th:text="${bIdx.content}"></span>
+        <div class="mb-3 row">
+            <label for="bContent" class="form-label">내용 : </label>
+            <textarea id="bContent" class="form-control-plaintext" rows="5" th:text="${bIdx.content}" readonly></textarea>
         </div>
-        <div>
-            <label>등록일 :</label>
-            <span th:text="${bIdx.insertdate}"></span>
+        <div class="row">
+            <span >등록일 : </span>
+            <span id="bInsertDate" th:text="${bIdx.insertdate}" readonly></span>
+            <button class="btn btn-outline-success btn-sm" th:onclick="|location.href='@{/board/modifyForm(bIdx = ${bIdx.boardIdx})}'|">게시글 수정</button>
+            <button class="btn btn-outline-danger btn-sm" th:onclick="|location.href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'|">게시글 삭제</button>
         </div>
     </div>
     <!--댓글 부분-->
     <div th:if="${cmtList ==null}">
         <p>댓글이 없음</p>
     </div>
-    <a th:href='@{/board/modifyForm(bIdx = ${bIdx.boardIdx})}'>게시글 수정</a>
-    <a th:href='@{/board/delete(bIdx = ${bIdx.boardIdx})}'>게시글 삭제</a>
 
+    <h4>댓글</h4>
     <div id="cmtList">
         <div th:each="cmt:${cmtList}">
-            <div th:name="floor+${cmt.floor}">
-                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->작성자 : [[${cmt.userIdx}]]</span>
-                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->내용 : [[${cmt.content}]]</span>
-                <span> <!--th:onclick="|location.href='@{/cmt/detail(cIdx = ${cmt.getCmtIdx()})}'|"-->등록일 : [[${cmt.insertdate}]]</span>
-                <button th:onclick="|location.href='@{/cmt/modifyForm(cIdx = ${cmt.getCmtIdx()})}'|">수정</button>
-                <button th:onclick="|location.href='@{/cmt/cInsertForm(cIdx = ${cmt.getCmtIdx()})}'|">답글</button>
-                <button th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|">삭제</button>
-                <span>[[${cmt.floor}]]</span>
+            <div th:name="floor+${cmt.floor}" class="mb-1 row">
+                <span hidden> 작성자 : [[${cmt.userIdx}]]</span>
+                <span> 내용 : [[${cmt.content}]]</span>
+                <span style="font-size: small" border="1"> (작성일: [[${cmt.insertdate}]])</span>
+                <button class="btn btn-outline-success btn-sm"  th:onclick="|location.href='@{/cmt/modifyForm(cIdx = ${cmt.getCmtIdx()})}'|">수정</button>
+                <button class="btn btn-outline-primary btn-sm"  th:onclick="|location.href='@{/cmt/cInsertForm(cIdx = ${cmt.getCmtIdx()})}'|">답글</button>
+                <button class="btn btn-outline-danger btn-sm"  th:onclick="|location.href='@{/cmt/delete(cIdx = ${cmt.getCmtIdx()})}'|">삭제</button>
+                <span hidden>[[${cmt.floor}]]</span>
             </div>
         </div>
-
     </div>
-    <form name="readForm" action="/cmt/cmtInsert" method="post">
-        <div hidden>
-            <label>작성자</label>
-            <input id="userIdx" name="userIdx" value=1 >
-        </div>
-        <div hidden>
-            <label>게시판</label>
-            <input id="boardIdx" name="boardIdx" th:value="${bIdx.boardIdx}">
-        </div>
-        <div>
-            <label>댓글 작성</label>
-            <textarea id="content" name="content" rows="3" cols="60"></textarea>
-        </div>
-        <div th:if="${maxGroup !=null}" hidden>
-            <label>cmtgroup</label>
-            <input type="text" id="cmtgroup" name="cmtgroup" th:value="${maxGroup}">
-        </div>
-
-        <button id="insert_btn" type="submit">등록완료</button>
-    </form>
-<button type="button" onclick="location.href='/board/list'">돌아가기</button>
+    <div class="row mb-3">
+        <form name="readForm" action="/cmt/cmtInsert" method="post">
+            <div hidden>
+                <label>작성자</label>
+                <input id="userIdx" name="userIdx" value=1 >
+            </div>
+            <div hidden>
+                <label>게시판</label>
+                <input id="boardIdx" name="boardIdx" th:value="${bIdx.boardIdx}" readonly>
+            </div>
+            <div class="mb-3 row">
+                <label for="content"  class="form-label">댓글 작성</label>
+                <textarea id="content" name="content" class="form-control" cols="70"></textarea>
+            </div>
+            <div th:if="${maxGroup !=null}" hidden>
+                <label>cmtgroup</label>
+                <input type="text" id="cmtgroup" name="cmtgroup" th:value="${maxGroup}">
+            </div>
+            <div class="mb-3 row">
+                <button class="btn btn-outline-primary btn-sm" id="insert_btn" type="submit">등록완료</button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 <script th:inline="javascript" type="text/javascript">
+/*<![CDATA[*/
     $(document).ready(function (){
         const cInsertForm = $("form[name='readForm']");
         $("insert_btn").on("click", function (){
@@ -82,11 +87,13 @@
             cInsertForm.attr("method", "get");
             cInsertForm.submit();
         })
-        for(let i = 0; i<100; i++){
+        let j =/*[[${maxFloor}]]*/+0;
+        for(let i = 0; i<j+1; i++){
             let floor_select = $('div[name=floor'+i+']');
             floor_select.css('margin-left', i*20+'px');
         }
     })
+/*]]>*/
 </script>
 
 </html>

@@ -22,4 +22,8 @@ public interface BoardMapper {
     void boardModify(BoardVo boardVo)throws Exception;
 
     void boardInsert(BoardVo boardVo)throws  Exception;
+
+    Integer maxFloor(int boardIdx)throws Exception;
+
+    Integer boardCmtNum(int boardIdx)throws Exception;
 }

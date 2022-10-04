@@ -21,8 +21,10 @@ public class CmtController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public String cmtDelete(@RequestParam("cIdx")int cmtIdx)throws Exception{
+        CmtVo cmtVo = cmtService.findById(cmtIdx);
+        int bIdx = cmtVo.getBoardIdx();
         cmtService.cmtDelete(cmtIdx);
-        return "redirect:/board/list";
+        return "redirect:/board/detail?bIdx="+bIdx;
     }
     @GetMapping("/modifyForm")
     public String cmtModifyForm(@RequestParam("cIdx")int cmtIdx, Model model)throws Exception{
@@ -33,7 +35,8 @@ public class CmtController {
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     public String cmtModify(CmtVo cmtVo)throws Exception{
         cmtService.cmtModify(cmtVo);
-        return "redirect:/board/list";
+        int bIdx = cmtVo.getBoardIdx();
+        return "redirect:/board/detail?bIdx="+bIdx;
     }
     @GetMapping("/cInsertForm")
     public String cInsertForm(@RequestParam("cIdx")int cmtIdx, Model model)throws Exception{
@@ -44,11 +47,13 @@ public class CmtController {
     @RequestMapping(value = "/cInsert", method = RequestMethod.POST)
     public String cInsert(CmtVo cmtVo)throws Exception{
         cmtService.cInsert(cmtVo);
-        return "redirect:/board/list";
+        int bIdx = cmtVo.getBoardIdx();
+        return "redirect:/board/detail?bIdx="+bIdx;
     }
     @RequestMapping(value = "/cmtInsert", method = RequestMethod.POST)
     public String cmtInsert(CmtVo cmtVo)throws Exception{
         cmtService.cmtInsert(cmtVo);
-        return "redirect:/board/list";
+        int bIdx = cmtVo.getBoardIdx();
+        return "redirect:/board/detail?bIdx="+bIdx;
     }
 }

@@ -34,7 +34,7 @@ CREATE TABLE `board` (
   UNIQUE KEY `boardnum_UNIQUE` (`boardIdx`),
   KEY `board_uesrIdx_user_userIdx_fk_idx` (`userIdx`),
   CONSTRAINT `board_uesrIdx_user_userIdx_fk` FOREIGN KEY (`userIdx`) REFERENCES `user` (`userIdx`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `board` (
 
 LOCK TABLES `board` WRITE;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
-INSERT INTO `board` VALUES (1,'1',7,'1','2022-09-30 06:54:49');
+INSERT INTO `board` VALUES (1,'게시글제목',21,'게시글내용','2022-09-30 08:29:43'),(1,'123',22,'123','2022-10-04 00:38:41');
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `cmt` (
   KEY `cmt_uesrIdx_user_userIdx_fk` (`userIdx`),
   CONSTRAINT `cmt_boardIdx_board_boardIdx_fk` FOREIGN KEY (`boardIdx`) REFERENCES `board` (`boardIdx`) ON DELETE CASCADE,
   CONSTRAINT `cmt_uesrIdx_user_userIdx_fk` FOREIGN KEY (`userIdx`) REFERENCES `user` (`userIdx`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `cmt` (
 
 LOCK TABLES `cmt` WRITE;
 /*!40000 ALTER TABLE `cmt` DISABLE KEYS */;
-INSERT INTO `cmt` VALUES (52,1,'1',7,'2022-09-30 06:54:51',NULL,0,0,1),(53,1,'11',7,'2022-09-30 06:54:54',52,1,1,1),(54,1,'111',7,'2022-09-30 06:54:59',53,2,2,1),(55,1,'1111',7,'2022-09-30 06:55:03',54,3,3,1),(56,1,'123',7,'2022-09-30 07:21:08',NULL,0,0,2),(57,1,'123`',7,'2022-09-30 07:21:13',56,1,1,2),(58,1,'12',7,'2022-09-30 07:21:29',52,1,6,1),(59,1,'123',7,'2022-09-30 07:21:29',58,2,7,1),(60,1,'11111',7,'2022-09-30 07:21:29',55,4,4,1),(61,1,'112',7,'2022-09-30 07:21:36',53,2,5,1);
+INSERT INTO `cmt` VALUES (196,1,'댓글',21,'2022-09-30 08:29:47',NULL,0,0,1),(206,1,'123',21,'2022-10-04 00:38:24',196,1,1,1),(207,1,'1234',21,'2022-10-04 00:38:27',206,2,2,1),(208,1,'답글',21,'2022-10-04 00:46:34',207,3,3,1),(209,1,'234',21,'2022-10-04 00:46:49',NULL,0,0,2);
 /*!40000 ALTER TABLE `cmt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,24 +231,16 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `c_insert_logic3`(
 )
 BEGIN
 	declare param_num integer;
+    declare param_cmtnum integer;
 	select count(*) into param_num from cmt where floor=param_floor and parent = param_parent ;
+    select Max(cmtorder) into param_cmtnum from cmt where floor >= param_floor and cmtgroup = param_cmtgroup;
    -- 대댓글
-    if param_num = 1 then
-    UPDATE cmt set cmtorder = cmtorder+1 where cmtorder > 
-		(select cmtorder from (
-			(select count(*) from cmt as cmt_a1 where floor >= param_floor  and cmtgroup = param_cmtgroup)) cmt1);
+    if param_num > 0 then
+    UPDATE cmt set cmtorder = cmtorder+param_num where cmtorder > param_cmtnum;
 	INSERT INTO cmt
 		(userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
 	VALUES
-		(param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select count(*) from cmt as cmt_a1 where floor >= param_floor)+1);
-	elseif param_num > 1 then
-    UPDATE cmt set cmtorder = cmtorder+1 where cmtorder > 
-		(select cmtorder from (
-			(select MAX(cmtorder) from cmt as cmt_a1 where floor >= param_floor  and cmtgroup = param_cmtgroup)) cmt1);
-	INSERT INTO cmt
-		(userIdx,content,boardIdx,parent,floor,cmtgroup,cmtorder)
-	VALUES
-		(param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup, (select MAX(cmtorder) from cmt as cmt_a1 where floor >= param_floor)+1);
+		(param_useridx, param_content,param_boardidx,param_parent,param_floor,param_cmtgroup,param_cmtnum+param_num);
 	else
     -- 대댓글이 하나도 없을 경우
     UPDATE cmt set cmtorder = cmtorder+1 where cmtgroup = param_cmtgroup and cmtorder > param_cmtorder and boardIdx = param_boardidx;
@@ -306,4 +298,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-30 16:22:36
+-- Dump completed on 2022-10-04  9:51:58

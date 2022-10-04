@@ -3,14 +3,10 @@ package com.example.springb.service;
 import com.example.springb.domain.BoardVo;
 import com.example.springb.domain.UserVo;
 import com.example.springb.mapper.BoardMapper;
-import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -45,4 +41,11 @@ public class BoardService {
     public void boardInsert(BoardVo boardVo)throws Exception{
         boardMapper.boardInsert(boardVo);
     }
+    public Integer maxFloor(int boardIdx)throws Exception{
+        return boardMapper.maxFloor(boardIdx);
+    }
+    public Integer boardCmtNum(int boardIdx)throws Exception{
+        return boardMapper.boardCmtNum(boardIdx);
+    }
+
 }

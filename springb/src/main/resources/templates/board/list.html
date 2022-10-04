@@ -3,12 +3,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>게시판</title>
+    <title>게시글 목록</title>
 </head>
+<header th:insert="nav.html"></header>
 <body>
-<a href="/">HOME</a>
+<div class="container">
     <h1>게시글 목록</h1>
-    <table>
+    <table class="table">
         <tr>
             <th>번호</th>
             <th>작성자</th>
@@ -19,12 +20,13 @@
             <p>게시글이 없습니다.</p>
         </div>
         <tr th:each="boardList:${bList}">
-            <td th:text="${boardList.boardIdx}"></td>
-            <td th:text="${boardList.userIdx}"></td>
+            <td th:onclick="|location.href='@{/board/detail(bIdx = ${boardList.getBoardIdx()})}'|" th:text="${boardList.boardIdx}"></td>
+            <td th:onclick="|location.href='@{/board/detail(bIdx = ${boardList.getBoardIdx()})}'|" th:text="${boardList.userIdx}"></td>
             <td th:onclick="|location.href='@{/board/detail(bIdx = ${boardList.getBoardIdx()})}'|" >[[${boardList.title}]]</td>
-            <td th:text="${boardList.insertdate}"></td>
+            <td th:onclick="|location.href='@{/board/detail(bIdx = ${boardList.getBoardIdx()})}'|" th:text="${boardList.insertdate}"></td>
         </tr>
     </table>
-    <a href="/board/insertForm">등록</a>
+    <a class="btn btn-outline-primary" href="/board/insertForm">등록</a>
+</div>
 </body>
 </html>

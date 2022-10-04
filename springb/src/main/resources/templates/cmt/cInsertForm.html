@@ -4,46 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Title</title>
+    <title>답글 등록</title>
 </head>
+<header th:insert="nav.html"></header>
 <body>
-<form name="readForm" action="/cmt/cInsert" method="post">
-    <div hidden>
-        <label>작성자</label>
-        <input id="userIdx" name="userIdx" th:value="${cmt.userIdx}" >
-    </div>
-    <div hidden>
-        <label>게시판</label>
-        <input id="boardIdx" name="boardIdx" th:value="${cmt.boardIdx}">
-    </div>
-    <div>
-        <label>내용</label>
-        <textarea id="content" name="content" rows="3" cols="60"></textarea>
-    </div>
-    <div hidden>
-        <label>parent</label>
-        <input type="text" id="parent" name="parent" th:value="${cmt.cmtIdx}">
-    </div>
-    <div hidden>
-        <label>floor</label>
-        <input type="text" id="floor" name="floor" th:value="${cmt.floor}+1">
-    </div>
-    <div hidden>
-        <label>cmtorder</label>
-        <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}">
-    </div>
-    <div hidden>
-        <label>cmtgroup</label>
-        <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.cmtgroup}">
-    </div>
-<!--    <div>
-        <label>작성일</label>
-        <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
-    </div>-->
+<div class="container">
+    <h3>답글 등록하기</h3>
+    <form name="readForm" action="/cmt/cInsert" method="post">
+        <div hidden>
+            <label>작성자</label>
+            <input id="userIdx" name="userIdx" th:value="${cmt.userIdx}" >
+        </div>
+        <div hidden>
+            <label>게시판</label>
+            <input id="boardIdx" name="boardIdx" th:value="${cmt.boardIdx}">
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea id="content" name="content" class="form-control"></textarea>
+        </div>
+        <div hidden>
+            <label>parent</label>
+            <input type="text" id="parent" name="parent" th:value="${cmt.cmtIdx}">
+        </div>
+        <div hidden>
+            <label>floor</label>
+            <input type="text" id="floor" name="floor" th:value="${cmt.floor}+1">
+        </div>
+        <div hidden>
+            <label>cmtorder</label>
+            <input type="text" id="cmtorder" name="cmtorder" th:value="${cmt.cmtorder}">
+        </div>
+        <div hidden>
+            <label>cmtgroup</label>
+            <input type="text" id="cmtgroup" name="cmtgroup" th:value="${cmt.cmtgroup}">
+        </div>
+    <!--    <div>
+            <label>작성일</label>
+            <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
+        </div>-->
 
-    <button id="insert_btn" type="submit">등록완료</button>
-    <button type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${cmt.boardIdx})}'|">돌아가기</button>
-</form>
+        <button class="btn btn-outline-primary btn-sm" id="insert_btn" type="submit">등록완료</button>
+        <button class="btn btn-outline-danger btn-sm" type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${cmt.boardIdx})}'|">돌아가기</button>
+    </form>
+</div>
 </body>
 <script type="text/javascript">
     $(document).ready(function (){

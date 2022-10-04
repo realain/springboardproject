@@ -4,34 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Title</title>
+    <title>게시글 수정</title>
 </head>
+<header th:insert="nav.html"></header>
 <body>
-<form name="readForm" action="/board/modify" method="post">
-    <div hidden>
-        <label>글번호</label>
-        <input id="boardIdx" name="boardIdx" readonly="readonly" th:value="${board.boardIdx}">
-    </div>
-    <div>
-        <label>작성자</label>
-        <input name="writer" readonly="readonly" th:value="${uName.name}">
-    </div>
-    <div>
-        <label>제목</label>
-        <textarea id="title" name="title" rows="3" cols="20">[[${board.title}]]</textarea>
-    </div>
-    <div>
-        <label>내용</label>
-        <textarea id="content" name="content" rows="20" cols="20">[[${board.content}]]</textarea>
-    </div>
-    <div>
-        <label>작성일</label>
-        <input name="insertDate" readonly="readonly" th:value="${board.insertdate}">
-    </div>
+<div class="container">
+    <form name="readForm" action="/board/modify" method="post">
+        <div hidden>
+            <label for="boardIdx">글번호</label>
+            <input id="boardIdx" name="boardIdx" readonly="readonly" th:value="${board.boardIdx}">
+        </div>
+        <div class="mb-3 row">
+            <label for="writer">작성자</label>
+            <input id="writer" name="writer" class="form-control-plaintext" readonly="readonly" th:value="${uName.name}">
+        </div>
+        <div class="mb-3 row">
+            <label for="title">제목</label>
+            <textarea id="title" name="title" class="form-control">[[${board.title}]]</textarea>
+        </div>
+        <div class="mb-3 row">
+            <label for="content">내용</label>
+            <textarea id="content" name="content" class="form-control">[[${board.content}]]</textarea>
+        </div>
+        <div class="mb-3 row">
+            <label for="insertDate">작성일</label>
+            <input id="insertDate" name="insertDate" readonly="readonly" class="form-control-plaintext" th:value="${board.insertdate}">
+        </div>
 
-    <button id="modify_btn" type="submit">수정완료</button>
-    <button type="button" onclick="location.href='/board/list'">돌아가기</button>
-</form>
+        <button class="btn btn-outline-success" id="modify_btn" type="submit">수정완료</button>
+        <button class="btn btn-outline-danger" type="button" th:onclick="|location.href='@{/board/detail(bIdx = ${bIdx})}'|">돌아가기</button>
+    </form>
+</div>
 </body>
 <script type="text/javascript">
     $(document).ready(function (){
